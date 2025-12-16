@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FRC 2026 Rules Mastery</title>
+    <style>
+        :root { --primary: #0066B3; --bg: #1a1a1a; --card: #2d2d2d; --text: #ffffff; --success: #28a745; --error: #dc3545; }
+        body { font-family: 'Segoe UI', sans-serif; background-color: var(--bg); color: var(--text); display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; }
+        .container { background-color: var(--card); padding: 2rem; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.3); width: 100%; max-width: 600px; }
+        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; border-bottom: 1px solid #444; padding-bottom: 1rem; }
+        .question-text { font-size: 1.25rem; margin-bottom: 1.5rem; line-height: 1.5; }
+        .options-grid { display: grid; gap: 10px; }
+        button.option-btn { background: #3d3d3d; border: 1px solid #555; color: white; padding: 15px; text-align: left; cursor: pointer; border-radius: 5px; transition: all 0.2s; font-size: 1rem; }
+        button.option-btn:hover:not(:disabled) { background: #4d4d4d; border-color: var(--primary); }
+        button.option-btn.correct { background: var(--success) !important; border-color: var(--success); }
+        button.option-btn.wrong { background: var(--error) !important; border-color: var(--error); opacity: 0.7; }
+        .feedback-area { margin-top: 1.5rem; padding: 1rem; background: #363636; border-left: 4px solid var(--primary); display: none; }
+        .next-btn { margin-top: 1rem; padding: 10px 20px; background-color: var(--primary); color: white; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; float: right; }
+        .next-btn:hover { background-color: #005294; }
+        #loading-msg { text-align: center; color: #888; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header">
+        <div>FRC 2026 Rules Quiz</div>
+        <div id="score">Score: 0</div>
+    </div>
+
+    <div id="loading-msg">Loading questions from quiz.json...</div>
+
+    <div id="quiz-box" style="display:none;">
+        <div class="question-text" id="question"></div>
+        <div class="options-grid" id="options"></div>
+        
+        <div class="feedback-area" id="feedback">
+            <strong>Explanation:</strong> <span id="explanation-text"></span>
+            <br><br>
+            <button class="next-btn" onclick="nextQuestion()">Next Question ➜</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    let currentQIndex = 0;
+    let score = 0;
+    let shuffledQuestions = [];
+
+    // 1. Fetch JSON Data
+    async function initQuiz() {
+        try {
+            const response = await fetch('quiz.json');
+            
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            
+            const data = await response.json();
+            
+            // Start the quiz
+            shuffledQuestions = shuffleArray([...data]);
+            document.getElementById('loading-msg').style.display = 'none';
+            document.getElementById('quiz-box').style.display = 'block';
+            loadQuestion();
+
+        } catch (error) {
+            console.error("Could not load quiz:", error);
+            document.getElementById('loading-msg').innerHTML = 
+                `Error loading quiz.json.<br><br>
+                 <strong>Note:</strong> Browsers block reading local files for security.<br>
+                 You must run this via a local server (like VS Code Live Server) or upload to GitHub Pages.`;
+            document.getElementById('loading-msg').style.color = "var(--error)";
+        }
+    }
+
+    // 2. Logic Functions
+    function shuffleArray(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
+        }
+        return array;
+    }
+
+    function loadQuestion() {
+        const q = shuffledQuestions[currentQIndex];
+        document.getElementById('question').innerText = q.Question;
+        document.getElementById('feedback').style.display = 'none';
+        
+        const optionsDiv = document.getElementById('options');
+        optionsDiv.innerHTML = '';
+
+        const keys = ["Option A", "Option B", "Option C", "Option D"];
+        
+        keys.forEach(key => {
+            const btn = document.createElement('button');
+            btn.className = 'option-btn';
+            btn.innerText = q[key];
+            btn.onclick = () => checkAnswer(key, q["Correct Answer"], q["Explanation"], btn);
+            optionsDiv.appendChild(btn);
+        });
+    }
+
+    function checkAnswer(selected, correctKey, explanation, btnElement) {
+        const allBtns = document.querySelectorAll('.option-btn');
+        allBtns.forEach(b => b.disabled = true);
+
+        const feedbackDiv = document.getElementById('feedback');
+        document.getElementById('explanation-text').innerText = explanation;
+        feedbackDiv.style.display = 'block';
+
+        if (selected === correctKey) {
+            btnElement.classList.add('correct');
+            score++;
+            updateScore();
+        } else {
+            btnElement.classList.add('wrong');
+            // Highlight the correct answer for learning
+             // (We don't know which button is correct easily without looping, so we rely on explanation text)
+        }
+    }
+
+    function nextQuestion() {
+        currentQIndex++;
+        if (currentQIndex < shuffledQuestions.length) {
+            loadQuestion();
+        } else {
+            document.getElementById('quiz-box').innerHTML = `
+                <div style="text-align:center">
+                    <h2>Quiz Complete!</h2>
+                    <p>Final Score: ${score} / ${shuffledQuestions.length}</p>
+                    <button class="next-btn" onclick="location.reload()" style="float:none">Restart</button>
+                </div>
+            `;
+        }
+    }
+
+    function updateScore() {
+        document.getElementById('score').innerText = `Score: ${score}`;
+    }
+
+    // Start everything
+    initQuiz();
+
+</script>
+</body>
+</html>
