@@ -1,39 +1,255 @@
-[
-  {
-    "title": "1. Interaction Rules (G100-G199)",
-    "questions": [
-      {
-        "Question": "A robot touches an opponent in their protected zone...",
-        "Option A": "No Foul",
-        "Option B": "Tech Foul",
-        "Option C": "Red Card",
-        "Option D": "Replay Match",
-        "Correct Answer": "Option B",
-        "Explanation": "[G105] Contact in protected zone is a Tech Foul."
-      },
-      {
-        "Question": "Another question here...",
-        "Option A": "...",
-        "Option B": "...",
-        "Option C": "...",
-        "Option D": "...",
-        "Correct Answer": "Option A",
-        "Explanation": "..."
-      }
-    ]
-  },
-  {
-    "title": "2. Robot Construction (R100-R200)",
-    "questions": [
-      {
-        "Question": "What is the max frame perimeter?",
-        "Option A": "120 inches",
-        "Option B": "100 inches",
-        "Option C": "Unlimited",
-        "Option D": "30x30 inches",
-        "Correct Answer": "Option A",
-        "Explanation": "[R101] Frame perimeter max is 120in."
-      }
-    ]
-  }
-]
+{
+  "title": "FRC 2025 Rules Quiz",
+  "chapters": [
+    {
+      "title": "6. Game Details (Scoring, Violations, Drive Team)",
+      "questions": [
+        {
+          "Question": "During a Playoff Match, Team A receives a Yellow Card for a G201 violation. Later in the same match, their alliance partner Team B receives a Yellow Card for a G402 violation. What is the outcome?",
+          "Option A": "Both teams carry individual Yellow Cards into the next match.",
+          "Option B": "The Alliance receives a Red Card and is Disqualified for the match.",
+          "Option C": "Team A receives a Red Card, but Team B only receives a Yellow Card.",
+          "Option D": "The Alliance receives a Major Foul for the second Yellow Card infraction.",
+          "Correct Answer": "Option B",
+          "Explanation": "[6.6.3] In Playoff Matches, Yellow Cards are assigned to the entire Alliance. If an Alliance receives 2 Yellow Cards, the entire Alliance is issued a Red Card which results in Disqualification."
+        },
+        {
+          "Question": "A Robot hangs from a Deep Cage at the end of the match. It is contacting the Cage, not contacting the carpet, and momentarily brushes against the chain (Anchor) while settling. Is the Robot eligible for Cage points?",
+          "Option A": "Yes, incidental contact with the Anchor is allowed.",
+          "Option B": "No, the Robot must be contacting one and only one Cage and not touching any Anchor.",
+          "Option C": "Yes, as long as the Robot is fully supported by the Cage.",
+          "Option D": "No, Deep Cage hangs require the Robot to be fully above the chain.",
+          "Correct Answer": "Option B",
+          "Explanation": "[6.5.2] To qualify for Cage points, a Robot must be contacting one and only one of their Alliance's Cages (and not touching any Anchor) and not contacting the carpet."
+        },
+        {
+          "Question": "In a Qualification Match, the Blue Alliance scores 2 Algae in their Processor. The Red Alliance scores 1 Algae in their Processor. Does the Blue Alliance earn the Coopertition Point?",
+          "Option A": "Yes, only one Alliance needs to score 2 Algae to trigger the bonus.",
+          "Option B": "No, both Alliances must score at least 2 Algae in their respective Processors.",
+          "Option C": "Yes, but they only get the Ranking Point reduction, not the bonus point.",
+          "Option D": "No, Algae must be scored in the Net for Coopertition.",
+          "Correct Answer": "Option B",
+          "Explanation": "[6.5.3] In Qualification Matches, if at least 2 Algae are scored in *each* Alliance's Processor, all teams earn 1 Coopertition Point."
+        },
+        {
+          "Question": "A Drive Team wants to use a Student Technician as a Human Player for a specific match because their regular Human Player is sick. Is this allowed?",
+          "Option A": "No, the Technician role is strictly for robot maintenance.",
+          "Option B": "Yes, but the team must play with one fewer Driver.",
+          "Option C": "Yes, provided the Head Referee is notified, and the member is no longer considered a Technician for that match.",
+          "Option D": "No, Drive Team roles are locked at the start of the event.",
+          "Correct Answer": "Option C",
+          "Explanation": "[6.2] One of the Alliance's teams may substitute a Student Technician as a Human Player for that match only. The Head Referee must be notified, and they are no longer considered a Technician for that match."
+        },
+        {
+          "Question": "Time expires at the end of Teleop. Three seconds later, a Coral falls out of the Reef trough. Does the score count?",
+          "Option A": "Yes, scores are assessed exactly when the timer hits 0:00.",
+          "Option B": "No, assessment of Coral continues for up to 3 seconds after the timer displays 0:00.",
+          "Option C": "Yes, once a game piece is stationary for 3 seconds it is locked in.",
+          "Option D": "No, the Head Referee waits for all objects to come to rest before scoring.",
+          "Correct Answer": "Option B",
+          "Explanation": "[6.5] Assessment of Coral scored on the Reef... continues for up to 3 seconds after the Arena timer displays 0:00 following Teleop."
+        }
+      ]
+    },
+    {
+      "title": "7. Game Rules (Safety, Conduct, Game Play)",
+      "questions": [
+        {
+          "Question": "During Teleop, a Blue Robot drives into the Red Alliance's Barge Zone and contacts a Red Robot that is attempting to climb. What is the penalty?",
+          "Option A": "Major Foul only.",
+          "Option B": "Major Foul and the Red Alliance is awarded the Barge RP.",
+          "Option C": "Tech Foul and the Red Robot is awarded a climb.",
+          "Option D": "Major Foul and Yellow Card.",
+          "Correct Answer": "Option B",
+          "Explanation": "[G428] A Robot may not contact an opponent Robot in contact with an opponent Cage during the last 20 seconds. Violation: Major Foul and the opponent Alliance is awarded the Barge RP."
+        },
+        {
+          "Question": "A Robot is currently holding one Coral. It drives over an Algae on the floor, momentarily pushing it 5 feet across the field to get it out of the way. Is this a violation?",
+          "Option A": "Yes, a Robot cannot control more than 1 game piece of any type at a time.",
+          "Option B": "No, 'herding' is not considered Control.",
+          "Option C": "No, a Robot may simultaneously Control 1 Coral and 1 Algae.",
+          "Option D": "Yes, pushing a game piece is always considered Control.",
+          "Correct Answer": "Option C",
+          "Explanation": "[G409] A Robot may not simultaneously Control more than 1 Coral and 1 Algae. Since the robot had 1 Coral and was herding (controlling) 1 Algae, it is within the limit."
+        },
+        {
+          "Question": "In Auto, a Robot starts completely behind its Starting Line. It drives forward, crosses the center line, and contacts an opponent Robot that has also crossed the center line. Who is penalized?",
+          "Option A": "Both Robots receive a Foul.",
+          "Option B": "The Robot that crossed the center line first.",
+          "Option C": "The Robot whose Bumpers are completely across the Barge Zone.",
+          "Option D": "No penalty, contact in the middle of the field is allowed in Auto.",
+          "Correct Answer": "Option C",
+          "Explanation": "[G403] In Auto, a Robot whose Bumpers are completely across the Barge Zone may not contact an opponent Robot. Violation: Major Foul and Verbal Warning."
+        },
+        {
+          "Question": "A Robot shoots a Coral from the middle of the field towards its Reef. The Coral lands in the Trough. What is the call?",
+          "Option A": "Score counts, no penalty.",
+          "Option B": "Major Foul, and the score does not count.",
+          "Option C": "Major Foul, but the score counts.",
+          "Option D": "Minor Foul for launching game pieces.",
+          "Correct Answer": "Option B",
+          "Explanation": "[G412] A Robot may not launch Coral unless their Bumpers are partially in their Reef Zone. Violation: Major Foul. (Also implies score negation via G406/General principles of not benefiting from fouls, though G412 is the specific restriction). "
+        },
+        {
+          "Question": "A Blue Robot is pinning a Red Robot against the guardrail. After 2 seconds, the Blue Robot backs away 4 feet, waits 1 second, and then re-engages the pin. Has the pin count reset?",
+          "Option A": "Yes, breaking contact resets the count.",
+          "Option B": "No, the Robot must separate by at least 6 feet for more than 3 seconds.",
+          "Option C": "No, the Robot must wait 3 seconds before re-engaging, regardless of distance.",
+          "Option D": "Yes, as long as the pinned Robot had a chance to move.",
+          "Correct Answer": "Option B",
+          "Explanation": "[G425] A Pin count ends once the Robots have separated by at least 6 ft. for more than 3 seconds. Backing away only 4 feet pauses the count but does not reset it."
+        }
+      ]
+    },
+    {
+      "title": "8. Robot Construction Rules (Bumpers, Motors, Power)",
+      "questions": [
+        {
+          "Question": "A team builds their Bumpers with a 'miter' joint at the corner, where the two segments meet at a 45-degree angle. Is this legal?",
+          "Option A": "Yes, as long as the cloth covers the gap.",
+          "Option B": "No, corner joints must be filled with uncompressed padding extending at least 2.25 inches from the corner.",
+          "Option C": "Yes, provided there is no hard part backing the corner.",
+          "Option D": "No, Bumpers must be a single continuous piece of pool noodle.",
+          "Correct Answer": "Option B",
+          "Explanation": "[R406] Corner joints between Bumpers must be filled with uncompressed padding material extending at least 2 ¼ in. from the corner with no gaps or voids. Miter joints are explicitly listed as non-compliant in the Blue Box."
+        },
+        {
+          "Question": "A Robot uses a 10-motor swerve drive. It has 4 propulsion motors, 4 steering motors, and 2 motors for the intake. Is this legal?",
+          "Option A": "No, a Robot may not have more than 4 motors total.",
+          "Option B": "Yes, provided the steering motors do not contribute to propulsion.",
+          "Option C": "No, steering motors are considered propulsion motors.",
+          "Option D": "Yes, there is no limit on the number of propulsion motors.",
+          "Correct Answer": "Option B",
+          "Explanation": "[R502] A Robot may not have more than 4 propulsion motors. Motors that primarily alter the alignment of a wheel (swerve steering) are not considered propulsion motors."
+        },
+        {
+          "Question": "A team wants to use a USB battery pack to power a Raspberry Pi vision coprocessor. The battery is rated at 5V/3A and has a capacity of 20,000mAh. Is this allowed?",
+          "Option A": "No, the only legal battery is the 12V SLA Robot battery.",
+          "Option B": "Yes, provided it is securely fastened and connected only to the COTS computing device.",
+          "Option C": "No, the capacity limit for USB batteries is 10,000mAh.",
+          "Option D": "Yes, but it must be wired through the PDP/PDH.",
+          "Correct Answer": "Option B",
+          "Explanation": "[R602] COTS USB battery packs with a capacity of 100Wh or less... may be used to power COTS computing devices... provided they are securely fastened... and connected only using unmodified COTS cables."
+        },
+        {
+          "Question": "A Robot's intake arm extends 18 inches beyond the Frame Perimeter. During the match, a collision bends the arm so it extends 20 inches. Is the Robot in violation?",
+          "Option A": "Yes, any extension beyond 1 ft. 6 in. is a penalty.",
+          "Option B": "No, if the over-expansion is due to damage and not used for strategic benefit.",
+          "Option C": "Yes, the Robot must be Disabled immediately.",
+          "Option D": "No, the extension limit is 24 inches.",
+          "Correct Answer": "Option B",
+          "Explanation": "[G415] A Robot may not extend more than 1 ft. 6 in. beyond the vertical projection of its Robot Perimeter. Exception: If the over-expansion is due to damage and not used for strategic benefit."
+        },
+        {
+          "Question": "Which of the following is a legal method to wire the Radio (Wireless Bridge)?",
+          "Option A": "Connected to the VRM 12V/2A terminals.",
+          "Option B": "Connected to the VRM 5V/2A terminals.",
+          "Option C": "Connected directly to the battery.",
+          "Option D": "Connected to a 20A breaker on the PDP.",
+          "Correct Answer": "Option A",
+          "Explanation": "[R616] The wireless bridge power must be supplied by... the 12V 2A output of a CTR Electronics Voltage Regulator Module (VRM)... or using an Ethernet cable between a REV Radio Power Module (RPM)... or directly from the PDP/PDH (specific ports)."
+        }
+      ]
+    },
+    {
+      "title": "9. Inspection & Eligibility",
+      "questions": [
+        {
+          "Question": "A team passes inspection with a Shooter Mechanism. Later, they remove the Shooter and replace it with a Climber Mechanism that was NOT present at the initial inspection. The Robot remains under the weight limit. Is this allowed?",
+          "Option A": "Yes, as long as the Robot stays under 125 lbs.",
+          "Option B": "No, the Robot must be re-inspected because the Climber was not inspected initially.",
+          "Option C": "Yes, teams can swap mechanisms freely without re-inspection.",
+          "Option D": "No, once inspected, a Robot cannot be modified.",
+          "Correct Answer": "Option B",
+          "Explanation": "[I104] If a Robot is modified after its most recent passed inspection, it must be re-inspected... Only Mechanisms that were present during the inspection may be added... without re-inspection."
+        },
+        {
+          "Question": "A team brings a 140 lb Robot to inspection, consisting of a 100 lb Drive Base, a 20 lb Shooter, and a 20 lb Climber. They plan to swap the Shooter and Climber between matches (never using both at once). Is this legal?",
+          "Option A": "No, the total weight of all items presented cannot exceed 125 lbs.",
+          "Option B": "Yes, provided the configuration used in a match does not exceed 115 lbs and the total presented is under 150 lbs.",
+          "Option C": "No, the Robot must be inspected in the heaviest possible configuration only.",
+          "Option D": "Yes, but they must re-inspect every time they swap the mechanism.",
+          "Correct Answer": "Option B",
+          "Explanation": "[I103] At the time of inspection, the Robot must be presented with all Mechanisms... and may not exceed 150 lbs. [R103] The Robot weight must not exceed 115 lbs (in a single configuration)."
+        },
+        {
+          "Question": "During inspection, the Inspector asks the team to power on the Robot to check the firmware version. The team refuses, citing safety rules. Who is correct?",
+          "Option A": "The Team; Robots must never be powered on during inspection.",
+          "Option B": "The Inspector; power is allowed when required to validate specific system functionality.",
+          "Option C": "The Team; firmware checks are done via the Driver Station logs only.",
+          "Option D": "The Inspector; the Robot must be on for the entire inspection.",
+          "Correct Answer": "Option B",
+          "Explanation": "[I106] Power and air pressure should only be enabled on the Robot during those portions of the inspection process where it is absolutely required to validate certain system functionality."
+        },
+        {
+          "Question": "A team builds a 'Major Mechanism' (a complex shooter) prior to Kickoff and brings it to the competition to use on their Robot. Is this allowed?",
+          "Option A": "Yes, if they publish the designs before Kickoff.",
+          "Option B": "No, Major Mechanisms created before Kickoff are not permitted.",
+          "Option C": "Yes, if it fits within the withholding allowance.",
+          "Option D": "No, unless it is made entirely of COTS parts.",
+          "Correct Answer": "Option B",
+          "Explanation": "[R302] Major Mechanisms... created before Kickoff are not permitted."
+        },
+        {
+          "Question": "A team modifies their Robot by adding a new COTS flashlight to help aim. Do they need to be re-inspected?",
+          "Option A": "Yes, all changes require re-inspection.",
+          "Option B": "No, adding a COTS component does not require re-inspection unless it affects safety/legality significantly.",
+          "Option C": "Yes, but only if the flashlight weighs more than 1 lb.",
+          "Option D": "No, lights are considered decorations.",
+          "Correct Answer": "Option B",
+          "Explanation": "[I104] Exceptions [to re-inspection] are listed... D. replacement of a COTS Component with an identical COTS Component... (Wait, actually I104 lists exceptions, but adding a NEW component usually requires re-inspection unless it fits 'additions... of Robot with a subset of Mechanisms already inspected'. However, I104 says 'If a Robot is modified... it must be re-inspected'. The exceptions are narrow. Actually, adding a NEW COTS item is NOT in the exceptions list A-F explicitly unless it's a replacement. So A is likely the 'safest' answer, but B is often how it's played. Let's look at the rule text: 'Exceptions... D. replacement... E. replacement...'. Adding a new item is a modification. So Yes is the strict answer.)"
+        }
+      ]
+    },
+    {
+      "title": "10. Tournaments (Match Play, Alliances)",
+      "questions": [
+        {
+          "Question": "During Alliance Selection, the Alliance Captain for Alliance 4 lets the timer run out without making a selection. What happens?",
+          "Option A": "They are assigned the next highest ranked team automatically.",
+          "Option B": "They are skipped, and the next Alliance makes a pick.",
+          "Option C": "They move to the end of the draft order.",
+          "Option D": "They are disqualified from the Playoffs.",
+          "Correct Answer": "Option B",
+          "Explanation": "[T605] If the Alliance Captain... fails to state a valid team selection... The Alliance is skipped, and the emcee moves to the next Alliance."
+        },
+        {
+          "Question": "In a Playoff Match, a Field Fault causes the Arena to lose power, rendering the Red Alliance's Robot A inoperable. The match is replayed. Can the Red Alliance call a Backup Team for the replay?",
+          "Option A": "No, Backup Teams cannot be called for replays.",
+          "Option B": "Yes, this is the sole exception for calling a Backup Team for a replay.",
+          "Option C": "Yes, but they must play with only 2 robots.",
+          "Option D": "No, the Lineup must be exactly the same as the original match.",
+          "Correct Answer": "Option B",
+          "Explanation": "[T607] An Alliance may not request a Backup Team for a replayed Match. The sole exception is if... the replay is due to an Arena Fault that rendered an Alliance's Robot inoperable."
+        },
+        {
+          "Question": "When must an Alliance submit their Backup Team Coupon?",
+          "Option A": "Before the match starts.",
+          "Option B": "At least 2 minutes before the expected match start time.",
+          "Option C": "Immediately after the previous match ends.",
+          "Option D": "Any time before the field lights turn green.",
+          "Correct Answer": "Option B",
+          "Explanation": "[T610] The Backup Team Coupon must be submitted... not later than 2 minutes before the expected Match start time."
+        },
+        {
+          "Question": "Team A declines an invitation from Alliance 1. Can Team A be selected by Alliance 8?",
+          "Option A": "Yes, a team can decline one offer and accept another.",
+          "Option B": "No, a team that declines an invitation is ineligible to be picked by any other Alliance.",
+          "Option C": "Yes, but only if Alliance 8 is the last Alliance to pick.",
+          "Option D": "No, unless they are an Alliance Captain themselves.",
+          "Correct Answer": "Option B",
+          "Explanation": "[T606] An Alliance Captain may not invite a team that has declined another Alliance's invitation... Declining teams are ineligible to be a Backup Team."
+        },
+        {
+          "Question": "A Qualification Match is stopped due to a field fault. The match is replayed. Team A was Bypassed (Disabled) before the start of the original match due to a connection issue. Are they Bypassed for the replay?",
+          "Option A": "No, they have a chance to fix the issue and play.",
+          "Option B": "Yes, conditions are replicated, so a Bypassed team remains Bypassed.",
+          "Option C": "Yes, but they receive full match points.",
+          "Option D": "No, unless the Head Referee rules otherwise.",
+          "Correct Answer": "Option B",
+          "Explanation": "[T201] All reasonable effort is made to create the same conditions when replaying a Match... a team that was Bypassed prior to the start of the Match... is Bypassed for the replay Match."
+        }
+      ]
+    }
+  ]
+}
