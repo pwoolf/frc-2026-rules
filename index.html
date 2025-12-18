@@ -6,92 +6,155 @@
     <title>FRC 2026 Rules Mastery</title>
     <style>
         :root { --primary: #0066B3; --bg: #1a1a1a; --card: #2d2d2d; --text: #ffffff; --success: #28a745; --error: #dc3545; }
-        body { font-family: 'Segoe UI', sans-serif; background-color: var(--bg); color: var(--text); display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; }
-        .container { background-color: var(--card); padding: 2rem; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.3); width: 100%; max-width: 600px; }
-        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; border-bottom: 1px solid #444; padding-bottom: 1rem; }
-        .question-text { font-size: 1.25rem; margin-bottom: 1.5rem; line-height: 1.5; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: var(--bg); color: var(--text); margin: 0; padding: 20px; display: flex; justify-content: center; min-height: 100vh; }
+        
+        .container { width: 100%; max-width: 800px; }
+        
+        /* HEADER STYLES */
+        .header { text-align: center; margin-bottom: 2rem; border-bottom: 1px solid #444; padding-bottom: 1rem; }
+        .header h1 { margin: 0; color: var(--primary); }
+        .header p { color: #aaa; margin-top: 10px; }
+
+        /* MENU GRID STYLES */
+        .menu-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 15px; }
+        .menu-card { background: var(--card); padding: 20px; border-radius: 8px; border: 1px solid #444; cursor: pointer; transition: transform 0.2s, border-color 0.2s; text-align: left; }
+        .menu-card:hover { transform: translateY(-3px); border-color: var(--primary); }
+        .menu-card h3 { margin: 0 0 10px 0; font-size: 1.1rem; }
+        .menu-card span { font-size: 0.9rem; color: #888; }
+
+        /* QUIZ STYLES */
+        #quiz-view { display: none; background: var(--card); padding: 2rem; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.5); }
+        .top-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; }
+        .back-btn { background: none; border: 1px solid #666; color: #ccc; padding: 5px 10px; border-radius: 4px; cursor: pointer; }
+        .back-btn:hover { background: #444; color: white; }
+        
+        .question-number { font-size: 0.9rem; color: var(--primary); font-weight: bold; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 5px;}
+        .question-text { font-size: 1.3rem; margin-bottom: 1.5rem; line-height: 1.4; }
+        
         .options-grid { display: grid; gap: 10px; }
         button.option-btn { background: #3d3d3d; border: 1px solid #555; color: white; padding: 15px; text-align: left; cursor: pointer; border-radius: 5px; transition: all 0.2s; font-size: 1rem; }
         button.option-btn:hover:not(:disabled) { background: #4d4d4d; border-color: var(--primary); }
         button.option-btn.correct { background: var(--success) !important; border-color: var(--success); }
         button.option-btn.wrong { background: var(--error) !important; border-color: var(--error); opacity: 0.7; }
-        .feedback-area { margin-top: 1.5rem; padding: 1rem; background: #363636; border-left: 4px solid var(--primary); display: none; }
+
+        .feedback-area { margin-top: 2rem; padding: 1rem; background: #363636; border-left: 4px solid var(--primary); display: none; }
         .next-btn { margin-top: 1rem; padding: 10px 20px; background-color: var(--primary); color: white; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; float: right; }
-        .next-btn:hover { background-color: #005294; }
-        #loading-msg { text-align: center; color: #888; }
+        
+        #loading { text-align: center; margin-top: 50px; color: #888; }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <div class="header">
-        <div>FRC 2026 Rules Quiz</div>
-        <div id="score">Score: 0</div>
+    
+    <div id="loading">Loading Rules Database...</div>
+
+    <div id="menu-view" style="display:none;">
+        <div class="header">
+            <h1>FRC 2026 Rules Mastery</h1>
+            <p>Select a rule category below to begin training. Questions are randomized.</p>
+        </div>
+        <div class="menu-grid" id="menu-grid">
+            </div>
     </div>
 
-    <div id="loading-msg">Loading questions from quiz.json...</div>
-
-    <div id="quiz-box" style="display:none;">
-        <div class="question-text" id="question"></div>
-        <div class="options-grid" id="options"></div>
+    <div id="quiz-view">
+        <div class="top-bar">
+            <button class="back-btn" onclick="showMenu()">← Back to Menu</button>
+            <div id="score-display">Score: 0</div>
+        </div>
         
+        <div class="question-number" id="q-number">QUESTION 1.1</div>
+        <div class="question-text" id="q-text"></div>
+        <div class="options-grid" id="options"></div>
+
         <div class="feedback-area" id="feedback">
             <strong>Explanation:</strong> <span id="explanation-text"></span>
             <br><br>
             <button class="next-btn" onclick="nextQuestion()">Next Question ➜</button>
         </div>
     </div>
+
 </div>
 
 <script>
-    let currentQIndex = 0;
+    let fullData = [];
+    let currentSectionIndex = 0;
+    let currentQuestionIndex = 0;
+    let currentQuestions = []; // The shuffled subset we are currently playing
     let score = 0;
-    let shuffledQuestions = [];
 
-    // 1. Fetch JSON Data
-    async function initQuiz() {
+    // --- INITIALIZATION ---
+    async function init() {
         try {
             const response = await fetch('quiz.json');
+            if (!response.ok) throw new Error("Failed to load");
+            fullData = await response.json();
             
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
-            
-            const data = await response.json();
-            
-            // Start the quiz
-            shuffledQuestions = shuffleArray([...data]);
-            document.getElementById('loading-msg').style.display = 'none';
-            document.getElementById('quiz-box').style.display = 'block';
-            loadQuestion();
-
-        } catch (error) {
-            console.error("Could not load quiz:", error);
-            document.getElementById('loading-msg').innerHTML = 
-                `Error loading quiz.json.<br><br>
-                 <strong>Note:</strong> Browsers block reading local files for security.<br>
-                 You must run this via a local server (like VS Code Live Server) or upload to GitHub Pages.`;
-            document.getElementById('loading-msg').style.color = "var(--error)";
+            renderMenu();
+            document.getElementById('loading').style.display = 'none';
+            document.getElementById('menu-view').style.display = 'block';
+        } catch (e) {
+            document.getElementById('loading').innerHTML = "Error: Could not load quiz.json. <br>Ensure you are running this on a local server or GitHub Pages.";
+            document.getElementById('loading').style.color = "var(--error)";
         }
     }
 
-    // 2. Logic Functions
-    function shuffleArray(array) {
-        for (let i = array.length - 1; i > 0; i--) {
-            const j = Math.floor(Math.random() * (i + 1));
-            [array[i], array[j]] = [array[j], array[i]];
-        }
-        return array;
+    // --- MENU LOGIC ---
+    function renderMenu() {
+        const grid = document.getElementById('menu-grid');
+        grid.innerHTML = '';
+
+        fullData.forEach((section, index) => {
+            const card = document.createElement('div');
+            card.className = 'menu-card';
+            card.onclick = () => startSection(index);
+            
+            // Extract the "1." or "2." from title if it exists, for styling
+            const title = section.title || `Section ${index + 1}`;
+            const count = section.questions.length;
+
+            card.innerHTML = `
+                <h3>${title}</h3>
+                <span>${count} Questions</span>
+            `;
+            grid.appendChild(card);
+        });
+    }
+
+    function showMenu() {
+        document.getElementById('quiz-view').style.display = 'none';
+        document.getElementById('menu-view').style.display = 'block';
+    }
+
+    // --- QUIZ LOGIC ---
+    function startSection(index) {
+        currentSectionIndex = index;
+        // Copy and shuffle the questions for this section
+        currentQuestions = shuffleArray([...fullData[index].questions]);
+        currentQuestionIndex = 0;
+        score = 0;
+
+        document.getElementById('menu-view').style.display = 'none';
+        document.getElementById('quiz-view').style.display = 'block';
+        
+        loadQuestion();
     }
 
     function loadQuestion() {
-        const q = shuffledQuestions[currentQIndex];
-        document.getElementById('question').innerText = q.Question;
-        document.getElementById('feedback').style.display = 'none';
+        const q = currentQuestions[currentQuestionIndex];
+        const sectionNum = currentSectionIndex + 1; // 1-based index for display
+        const qNum = currentQuestionIndex + 1;
         
+        // Update UI
+        document.getElementById('q-number').innerText = `SECTION ${sectionNum} • QUESTION ${sectionNum}.${qNum}`;
+        document.getElementById('score-display').innerText = `Score: ${score}`;
+        document.getElementById('q-text').innerText = q.Question;
+        document.getElementById('feedback').style.display = 'none';
+
+        // Render Options
         const optionsDiv = document.getElementById('options');
         optionsDiv.innerHTML = '';
-
         const keys = ["Option A", "Option B", "Option C", "Option D"];
         
         keys.forEach(key => {
@@ -103,46 +166,54 @@
         });
     }
 
-    function checkAnswer(selected, correctKey, explanation, btnElement) {
+    function checkAnswer(selected, correctKey, explanation, btn) {
+        // Lock all buttons
         const allBtns = document.querySelectorAll('.option-btn');
         allBtns.forEach(b => b.disabled = true);
 
-        const feedbackDiv = document.getElementById('feedback');
+        // Show Feedback
         document.getElementById('explanation-text').innerText = explanation;
-        feedbackDiv.style.display = 'block';
+        document.getElementById('feedback').style.display = 'block';
 
         if (selected === correctKey) {
-            btnElement.classList.add('correct');
+            btn.classList.add('correct');
             score++;
-            updateScore();
+            document.getElementById('score-display').innerText = `Score: ${score}`;
         } else {
-            btnElement.classList.add('wrong');
-            // Highlight the correct answer for learning
-             // (We don't know which button is correct easily without looping, so we rely on explanation text)
+            btn.classList.add('wrong');
         }
     }
 
     function nextQuestion() {
-        currentQIndex++;
-        if (currentQIndex < shuffledQuestions.length) {
+        currentQuestionIndex++;
+        if (currentQuestionIndex < currentQuestions.length) {
             loadQuestion();
         } else {
-            document.getElementById('quiz-box').innerHTML = `
+            // End of Section
+            document.getElementById('q-text').innerHTML = `
                 <div style="text-align:center">
-                    <h2>Quiz Complete!</h2>
-                    <p>Final Score: ${score} / ${shuffledQuestions.length}</p>
-                    <button class="next-btn" onclick="location.reload()" style="float:none">Restart</button>
+                    <h2>Section Complete!</h2>
+                    <p>You scored ${score} out of ${currentQuestions.length}</p>
+                    <button class="next-btn" onclick="showMenu()" style="float:none; margin-right:10px;">Return to Menu</button>
+                    <button class="next-btn" onclick="startSection(${currentSectionIndex})" style="float:none">Replay Section</button>
                 </div>
             `;
+            document.getElementById('options').innerHTML = '';
+            document.getElementById('feedback').style.display = 'none';
+            document.getElementById('q-number').innerText = "";
         }
     }
 
-    function updateScore() {
-        document.getElementById('score').innerText = `Score: ${score}`;
+    function shuffleArray(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
+        }
+        return array;
     }
 
-    // Start everything
-    initQuiz();
+    // Start App
+    init();
 
 </script>
 </body>
