@@ -1,20 +1,39 @@
 [
   {
-    "Question": "A robot extends 18 inches beyond its frame perimeter momentarily to score. Is this a foul?",
-    "Option A": "No, because it was momentary.",
-    "Option B": "Yes, Foul (G204).",
-    "Option C": "Yes, Tech Foul (G204).",
-    "Option D": "No, extension limits only apply in the endgame.",
-    "Correct Answer": "Option B",
-    "Explanation": "[G204] Robots may not extend more than 12 inches beyond their frame perimeter. Violation: Foul."
+    "title": "1. Interaction Rules (G100-G199)",
+    "questions": [
+      {
+        "Question": "A robot touches an opponent in their protected zone...",
+        "Option A": "No Foul",
+        "Option B": "Tech Foul",
+        "Option C": "Red Card",
+        "Option D": "Replay Match",
+        "Correct Answer": "Option B",
+        "Explanation": "[G105] Contact in protected zone is a Tech Foul."
+      },
+      {
+        "Question": "Another question here...",
+        "Option A": "...",
+        "Option B": "...",
+        "Option C": "...",
+        "Option D": "...",
+        "Correct Answer": "Option A",
+        "Explanation": "..."
+      }
+    ]
   },
   {
-    "Question": "During the endgame, a robot climbs while touching another robot. Is this allowed?",
-    "Option A": "No, G301 prohibits touching.",
-    "Option B": "Yes, provided they don't damage each other.",
-    "Option C": "Only if they are alliance partners.",
-    "Option D": "No, climbing requires isolation.",
-    "Correct Answer": "Option B",
-    "Explanation": "[G301] Interaction is allowed unless damaging or intentional tipping."
+    "title": "2. Robot Construction (R100-R200)",
+    "questions": [
+      {
+        "Question": "What is the max frame perimeter?",
+        "Option A": "120 inches",
+        "Option B": "100 inches",
+        "Option C": "Unlimited",
+        "Option D": "30x30 inches",
+        "Correct Answer": "Option A",
+        "Explanation": "[R101] Frame perimeter max is 120in."
+      }
+    ]
   }
 ]
